@@ -287,7 +287,14 @@ def do_sync(charm_conf, status_exchange):
         tmirror = glance.GlanceMirror(**mirror_args)
 
         log.info("calling GlanceMirror.sync")
-        tmirror.sync(smirror, path=initial_path)
+        try:
+            tmirror.sync(smirror, path=initial_path)
+        except Exception as e:
+            msg = "409 Conflict: Image "
+            if msg in e.details:
+                log.info("Ignoring glance 409 error for unable to delete image")
+            else:
+                raise
 
 
 def update_product_streams_service(ksc, services, region):

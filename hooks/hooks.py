@@ -55,6 +55,7 @@ USR_SHARE_DIR = '/usr/share/glance-simplestreams-sync'
 MIRRORS_CONF_FILE_NAME = os.path.join(CONF_FILE_DIR, 'mirrors.yaml')
 ID_CONF_FILE_NAME = os.path.join(CONF_FILE_DIR, 'identity.yaml')
 
+GET_CONVERTER_SCRIPT_NAME = "get-simplestreams-image-converter.sh"
 SYNC_SCRIPT_NAME = "glance-simplestreams-sync.py"
 SCRIPT_WRAPPER_NAME = "glance-simplestreams-sync.sh"
 
@@ -169,7 +170,8 @@ def install_cron_script():
     up-to-date.
 
     """
-    for fn in [SYNC_SCRIPT_NAME, SCRIPT_WRAPPER_NAME]:
+    for fn in [SYNC_SCRIPT_NAME, SCRIPT_WRAPPER_NAME,
+               GET_CONVERTER_SCRIPT_NAME]:
         shutil.copy(os.path.join("scripts", fn), USR_SHARE_DIR)
 
     config = hookenv.config()
